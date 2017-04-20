@@ -7,6 +7,7 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "lint": "eslint ./src",
+    "serve": "http-server -p5678",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Trambitskiy Yura",
@@ -20,6 +21,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.2 || ^4.0.0",
     "eslint-plugin-react": "^6.9.0",
+    "http-server": "^0.9.0",
     "webpack": "^2.4.1"
   },
   "dependencies": {

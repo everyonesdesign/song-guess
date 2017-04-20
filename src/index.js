@@ -4,6 +4,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import Slide from './slide';
+import { LIGHT_ACCENT } from './styles';
 
 const TEST_WORDS = [
   'billie',
@@ -30,7 +31,14 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <Slide index={0} />
+    <div
+      style={{
+        paddingTop: '18px',
+        borderTop: `6px solid ${LIGHT_ACCENT}`,
+      }}
+    >
+      <Slide index={0} />
+    </div>
   </Provider>,
   document.getElementById('container'),
 );

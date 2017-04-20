@@ -6,14 +6,20 @@ import PropTypes from 'prop-types';
 import { mapStateToProps, mapDispatchToProps } from './connector';
 
 export class SlideContainer extends React.PureComponent {
-  getStyles() {}
-
   render() {
     const { list, step, start } = this.props.words;
     const index = start + (step * this.props.index);
 
     return (
-      <div>{list[index]}</div>
+      <div
+        style={{
+          margin: '12px 0',
+          fontFamily: 'Catamaran, sans-serif',
+          fontWeight: 300,
+          fontSize: '36px',
+          textAlign: 'center',
+        }}
+      >{list[index]}</div>
     );
   }
 }

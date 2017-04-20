@@ -16,6 +16,7 @@ const store = createStore(
   state => state,
   {
     words: TEST_WORDS,
+    step: 5,
   },
   // eslint-disable-next-line no-underscore-dangle
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),

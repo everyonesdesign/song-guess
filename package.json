@@ -8,11 +8,12 @@
     "watch": "webpack --watch",
     "lint": "eslint ./src",
     "serve": "http-server -p5678",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava"
   },
   "author": "Trambitskiy Yura",
   "license": "MIT",
   "devDependencies": {
+    "ava": "^0.19.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
     "babel-preset-airbnb": "^2.2.3",
@@ -27,6 +28,7 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "prop-types": "^15.5.8",
+    "query-string": "^4.3.4",
     "radium": "^0.18.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
@@ -34,5 +36,14 @@
     "react-swipeable-views": "^0.12.1",
     "react-swipeable-views-utils": "^0.12.0",
     "redux": "^3.6.0"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.js"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
   }
 }

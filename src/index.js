@@ -39,6 +39,7 @@ ReactDOM.render(
       style={{
         paddingTop: '18px',
         borderTop: `6px solid ${LIGHT_ACCENT}`,
+        boxSizing: 'border-box',
       }}
     >
       <VirtualizeSwipeableViews slideRenderer={slideRenderer} />

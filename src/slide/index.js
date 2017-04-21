@@ -7,8 +7,7 @@ import { mapStateToProps, mapDispatchToProps } from './connector';
 
 export class SlideContainer extends React.PureComponent {
   render() {
-    const { list, step, start } = this.props.words;
-    const index = start + (step * this.props.index);
+    const { words, index } = this.props;
 
     return (
       <div
@@ -19,7 +18,7 @@ export class SlideContainer extends React.PureComponent {
           fontSize: '36px',
           textAlign: 'center',
         }}
-      >{list[index]}</div>
+      >{words[index % words.length]}</div>
     );
   }
 }
@@ -29,11 +28,7 @@ SlideContainer.defaultProps = {
 };
 
 SlideContainer.propTypes = {
-  words: PropTypes.shape({
-    list: PropTypes.array,
-    step: PropTypes.number,
-    start: PropTypes.number,
-  }),
+  words: PropTypes.array,
   index: PropTypes.number.isRequired,
 };
 

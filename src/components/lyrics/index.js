@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DEFAULT_FONT } from '../../styles';
+import { DEFAULT_FONT, ACCENT } from '../../styles';
 
 function getHighlightedLyrics(lyrics, word) {
   const regex = new RegExp(`\\b${word}\\b`, 'g');
@@ -40,10 +40,10 @@ export const LyricsContainer = (props) => {
       <div onClick={props.onClose}>
         <div
           style={{
-            height: '60px',
-            lineHeight: '60px',
+            height: '40px',
+            lineHeight: '40px',
             fontSize: '24px',
-            color: '#777',
+            color: ACCENT,
           }}
         >go back</div>
         <div style={{ fontSize: '24px', margin: '4px 0 6px' }}>

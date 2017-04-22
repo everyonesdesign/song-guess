@@ -23,6 +23,7 @@ export class SongsListContainer extends React.PureComponent {
       isFetching: false,
       items: null,
       showingLyrics: null,
+      isFetchingLyrics: null,
 
       // this allows us to render the same phrase and not pick
       // a different one on every rerendering
@@ -50,6 +51,8 @@ export class SongsListContainer extends React.PureComponent {
   }
 
   fetchLyrics(song) {
+    this.setState({ isFetchingLyrics: song.id });
+
     const url = `${this.props.fetchLyricsUrl}?id=${song.id}`;
     fetch(url)
       .then(response => response.json())
@@ -57,6 +60,7 @@ export class SongsListContainer extends React.PureComponent {
         const lyrics = data.message.body.lyrics;
 
         this.setState({
+          isFetchingLyrics: null,
           showingLyrics: {
             ...song,
             word: this.props.word,
@@ -96,6 +100,7 @@ export class SongsListContainer extends React.PureComponent {
       );
     }
 
+    const preloader = <span style={{ color: '#777' }}> — Loading...</span>;
     const tracks = this.state.items.map(i => (
       <li
         key={i.id}
@@ -105,9 +110,12 @@ export class SongsListContainer extends React.PureComponent {
           fontSize: '16px',
           lineHeight: '1.2',
         }}
-        onClick={() => this.fetchLyrics(i)}
+        onClick={() => (this.state.isFetchingLyrics ? null : this.fetchLyrics(i))}
       >
-        <div style={{ color: ACCENT, marginBottom: '5px' }}>{i.name}</div>
+        <div style={{ color: ACCENT, marginBottom: '5px' }}>
+          {i.name}
+          {this.state.isFetchingLyrics === i.id ? preloader : null}
+        </div>
         <div style={{ color: '#777' }}>{i.artist}</div>
       </li>
     ));
@@ -120,15 +128,18 @@ export class SongsListContainer extends React.PureComponent {
     ) : null;
 
     return (
-      <div>
+      <div
+        style={{
+          flex: '1 1 auto',
+          overflow: 'auto',
+        }}
+      >
         {lyrics}
         <ul
           style={{
             margin: '24px 0',
             padding: '0 10px',
             listStyle: 'none',
-            flex: '1 1 auto',
-            overflow: 'auto',
           }}
           onScroll={e => e.stopPropagation()}
         >

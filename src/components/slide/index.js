@@ -15,10 +15,10 @@ export class SlideContainer extends React.PureComponent {
     super(...args);
 
     this.state = {
-      isFetching: false,
-      items: null,
-      isFetchingLyrics: false,
+      songs: null,
       showingLyrics: null,
+      isFetchingSongsList: false,
+      isFetchingLyrics: false,
     };
   }
 
@@ -27,19 +27,19 @@ export class SlideContainer extends React.PureComponent {
   }
 
   fetchSongsList() {
-    if (this.state.isFetching) {
+    if (this.state.isFetchingSongsList) {
       return;
     }
 
-    this.setState({ isFetching: true });
+    this.setState({ isFetchingSongsList: true });
 
     const url = `${this.props.fetchSongsUrl}?word=${this.getWord()}`;
     fetch(url)
       .then(response => response.json())
       .then((data) => {
         this.setState({
-          isFetching: false,
-          items: data.message.body.track_list.map(t => ({
+          isFetchingSongsList: false,
+          songs: data.message.body.track_list.map(t => ({
             id: t.track.track_id,
             artist: t.track.artist_name,
             name: t.track.track_name,
@@ -117,8 +117,8 @@ export class SlideContainer extends React.PureComponent {
         </div>
         <SongsList
           word={word}
-          isFetching={this.state.isFetching}
-          items={this.state.items}
+          isFetchingSongsList={this.state.isFetchingSongsList}
+          songs={this.state.songs}
           showingLyrics={this.state.showingLyrics}
           isFetchingLyrics={this.state.isFetchingLyrics}
           fetchSongsList={() => this.fetchSongsList()}
@@ -127,7 +127,7 @@ export class SlideContainer extends React.PureComponent {
       </div>
     );
 
-    if (!this.state.items) {
+    if (!this.state.songs) {
       return (
         <Swipeable onSwipedUp={() => this.fetchSongsList()}>
           {slideContents}

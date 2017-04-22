@@ -26,10 +26,10 @@ export class SongsListContainer extends React.PureComponent {
   }
 
   render() {
-    if (!this.props.items) {
+    if (!this.props.songs) {
       let label;
 
-      if (this.props.isFetching) {
+      if (this.props.isFetchingSongsList) {
         label = 'Loading...';
       } else {
         label = (
@@ -52,7 +52,7 @@ export class SongsListContainer extends React.PureComponent {
           onClick={() => this.props.fetchSongsList()}
         >{label}</div>
       );
-    } else if (!this.props.items.length) {
+    } else if (!this.props.songs.length) {
       return (
         <div
           style={{
@@ -66,7 +66,7 @@ export class SongsListContainer extends React.PureComponent {
     }
 
     const preloader = <span style={{ color: '#777' }}> — Loading...</span>;
-    const tracks = this.props.items.map(i => (
+    const tracks = this.props.songs.map(i => (
       <li
         key={i.id}
         style={{
@@ -117,12 +117,12 @@ export class SongsListContainer extends React.PureComponent {
 
 SongsListContainer.defaultProps = {
   showingLyrics: null,
-  items: null,
+  songs: null,
 };
 
 SongsListContainer.propTypes = {
-  isFetching: PropTypes.bool.isRequired,
-  items: PropTypes.array,
+  isFetchingSongsList: PropTypes.bool.isRequired,
+  songs: PropTypes.array,
   showingLyrics: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

@@ -1,12 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Radium from 'radium';
 import PropTypes from 'prop-types';
 import sample from 'lodash/sample';
 
-import { mapStateToProps, mapDispatchToProps } from './connector';
 import { DEFAULT_FONT, ACCENT } from '../../styles';
 import Lyrics from '../lyrics';
+import Arrow from '../arrow';
 
 const NOT_FOUND_PHRASES = [
   'No songs for the word :(',
@@ -20,64 +19,27 @@ export class SongsListContainer extends React.PureComponent {
     super(...args);
 
     this.state = {
-      isFetching: false,
-      items: null,
-      showingLyrics: null,
-      isFetchingLyrics: null,
-
       // this allows us to render the same phrase and not pick
       // a different one on every rerendering
       notFoundPhrase: sample(NOT_FOUND_PHRASES),
     };
   }
 
-  fetchSongsList() {
-    this.setState({ isFetching: true });
-
-    const url = `${this.props.fetchSongsUrl}?word=${this.props.word}`;
-    fetch(url)
-      .then(response => response.json())
-      .then((data) => {
-        this.setState({
-          isFetching: false,
-          items: data.message.body.track_list.map(t => ({
-            id: t.track.track_id,
-            artist: t.track.artist_name,
-            name: t.track.track_name,
-            album: t.track.album_name,
-          })),
-        });
-      });
-  }
-
-  fetchLyrics(song) {
-    this.setState({ isFetchingLyrics: song.id });
-
-    const url = `${this.props.fetchLyricsUrl}?id=${song.id}`;
-    fetch(url)
-      .then(response => response.json())
-      .then((data) => {
-        const lyrics = data.message.body.lyrics;
-
-        // tracking required by https://developer.musixmatch.com/documentation/api-reference/track-lyrics-get
-        const script = document.createElement('script');
-        script.src = lyrics.script_tracking_url;
-        document.body.appendChild(script);
-
-        this.setState({
-          isFetchingLyrics: null,
-          showingLyrics: {
-            ...song,
-            word: this.props.word,
-            lyrics: lyrics.lyrics_body,
-            copyright: lyrics.lyrics_copyright,
-          },
-        });
-      });
-  }
-
   render() {
-    if (!this.state.items) {
+    if (!this.props.items) {
+      let label;
+
+      if (this.props.isFetching) {
+        label = 'Loading...';
+      } else {
+        label = (
+          <div style={{ textAlign: 'center' }} >
+            songs
+            <Arrow direction="bottom" style={{ display: 'block', margin: 'auto' }} />
+          </div>
+        );
+      }
+
       return (
         <div
           style={{
@@ -85,14 +47,12 @@ export class SongsListContainer extends React.PureComponent {
             margin: '24px 0',
             fontSize: '24px',
             textAlign: 'center',
-            color: this.state.isFetching ? '#777' : ACCENT,
+            color: '#777',
           }}
-          onClick={() => (this.state.isFetching ? null : this.fetchSongsList())}
-        >
-          {this.state.isFetching ? 'Loading...' : 'Show songs'}
-        </div>
+          onClick={() => this.props.fetchSongsList()}
+        >{label}</div>
       );
-    } else if (!this.state.items.length) {
+    } else if (!this.props.items.length) {
       return (
         <div
           style={{
@@ -106,7 +66,7 @@ export class SongsListContainer extends React.PureComponent {
     }
 
     const preloader = <span style={{ color: '#777' }}> — Loading...</span>;
-    const tracks = this.state.items.map(i => (
+    const tracks = this.props.items.map(i => (
       <li
         key={i.id}
         style={{
@@ -115,19 +75,19 @@ export class SongsListContainer extends React.PureComponent {
           fontSize: '16px',
           lineHeight: '1.2',
         }}
-        onClick={() => (this.state.isFetchingLyrics ? null : this.fetchLyrics(i))}
+        onClick={() => this.props.fetchLyrics(i)}
       >
         <div style={{ color: ACCENT, marginBottom: '5px' }}>
           {i.name}
-          {this.state.isFetchingLyrics === i.id ? preloader : null}
+          {this.props.isFetchingLyrics === i.id ? preloader : null}
         </div>
         <div style={{ color: '#777' }}>{i.artist}</div>
       </li>
     ));
 
-    const lyrics = this.state.showingLyrics ? (
+    const lyrics = this.props.showingLyrics ? (
       <Lyrics
-        {...this.state.showingLyrics}
+        {...this.props.showingLyrics}
         onClose={() => this.setState({ showingLyrics: null })}
       />
     ) : null;
@@ -155,10 +115,26 @@ export class SongsListContainer extends React.PureComponent {
   }
 }
 
-SongsListContainer.propTypes = {
-  word: PropTypes.string.isRequired,
-  fetchSongsUrl: PropTypes.string.isRequired,
-  fetchLyricsUrl: PropTypes.string.isRequired,
+SongsListContainer.defaultProps = {
+  showingLyrics: null,
+  items: null,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Radium(SongsListContainer));
+SongsListContainer.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  items: PropTypes.array,
+  showingLyrics: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    artist: PropTypes.string.isRequired,
+    album: PropTypes.string.isRequired,
+    word: PropTypes.string.isRequired,
+    lyrics: PropTypes.string.isRequired,
+    copyright: PropTypes.string.isRequired,
+  }),
+  isFetchingLyrics: PropTypes.bool.isRequired,
+  fetchSongsList: PropTypes.func.isRequired,
+  fetchLyrics: PropTypes.func.isRequired,
+};
+
+export default Radium(SongsListContainer);

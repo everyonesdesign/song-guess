@@ -47,9 +47,8 @@ export const LyricsContainer = (props) => {
       <div onClick={props.onClose}>
         <div
           style={{
-            height: '40px',
-            lineHeight: '40px',
-            fontSize: '24px',
+            marginBottom: '24px',
+            fontSize: '22px',
             color: ACCENT,
           }}
         >go back</div>

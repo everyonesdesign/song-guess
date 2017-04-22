@@ -69,7 +69,7 @@ export class SlideContainer extends React.PureComponent {
         document.body.appendChild(script);
 
         this.setState({
-          lyricsBeingFetched: false,
+          lyricsBeingFetched: null,
           showingLyrics: {
             ...song,
             word: this.getWord(),

@@ -13,12 +13,11 @@ export const SlideContainer = (props) => {
   const word = getWord(props.words, props.index);
 
   return (
-    <div style={{ height: '100%' }}>
+    <div style={{ height: '100%', padding: '10px' }}>
       <div
         style={{
           ...DEFAULT_FONT,
-          margin: '12px 0',
-          padding: '12px 24px',
+          margin: '24px 0',
           fontSize: '36px',
           lineHeight: '40px',
           textAlign: 'center',

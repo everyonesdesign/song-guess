@@ -47,6 +47,7 @@ export class SongsListContainer extends React.PureComponent {
             fontSize: '24px',
             textAlign: 'center',
             color: '#777',
+            flex: '1 1 auto',
           }}
           onClick={() => this.props.fetchSongsList()}
         >{label}</div>
@@ -59,6 +60,7 @@ export class SongsListContainer extends React.PureComponent {
             fontSize: '24px',
             color: '#777',
             textAlign: 'center',
+            flex: '1 1 auto',
           }}
         >{this.state.notFoundPhrase}</div>
       );

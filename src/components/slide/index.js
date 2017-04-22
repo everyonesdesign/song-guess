@@ -83,6 +83,27 @@ export class SlideContainer extends React.PureComponent {
   render() {
     const word = this.getWord();
 
+    const copyright = (
+      <div
+        style={{
+          ...DEFAULT_FONT,
+          margin: '24px 0 12px',
+          fontSize: '14px',
+          textAlign: 'center',
+          color: '#777',
+        }}
+      >
+        <a
+          href="https://www.musixmatch.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          Powered by musixmatch
+        </a>
+      </div>
+    );
+
     const lyrics = this.state.showingLyrics ? (
       <Lyrics
         {...this.state.showingLyrics}
@@ -133,6 +154,7 @@ export class SlideContainer extends React.PureComponent {
           fetchLyrics={item => this.fetchLyrics(item)}
         />
         {lyrics}
+        {copyright}
       </div>
     );
 

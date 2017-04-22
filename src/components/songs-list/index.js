@@ -6,6 +6,7 @@ import sample from 'lodash/sample';
 
 import { mapStateToProps, mapDispatchToProps } from './connector';
 import { DEFAULT_FONT, ACCENT } from '../../styles';
+import Lyrics from '../lyrics';
 
 const NOT_FOUND_PHRASES = [
   'No songs for the word :(',
@@ -21,6 +22,7 @@ export class SongsListContainer extends React.PureComponent {
     this.state = {
       isFetching: false,
       items: null,
+      showingLyrics: null,
 
       // this allows us to render the same phrase and not pick
       // a different one on every rerendering
@@ -28,7 +30,7 @@ export class SongsListContainer extends React.PureComponent {
     };
   }
 
-  fetch() {
+  fetchSongsList() {
     this.setState({ isFetching: true });
 
     const url = `${this.props.fetchSongsUrl}?word=${this.props.word}`;
@@ -47,6 +49,24 @@ export class SongsListContainer extends React.PureComponent {
       });
   }
 
+  fetchLyrics(song) {
+    const url = `${this.props.fetchLyricsUrl}?id=${song.id}`;
+    fetch(url)
+      .then(response => response.json())
+      .then((data) => {
+        const lyrics = data.message.body.lyrics;
+
+        this.setState({
+          showingLyrics: {
+            ...song,
+            word: this.props.word,
+            lyrics: lyrics.lyrics_body,
+            copyright: lyrics.lyrics_copyright,
+          },
+        });
+      });
+  }
+
   render() {
     if (!this.state.items) {
       return (
@@ -58,7 +78,7 @@ export class SongsListContainer extends React.PureComponent {
             textAlign: 'center',
             color: this.state.isFetching ? '#777' : ACCENT,
           }}
-          onClick={() => (this.state.isFetching ? null : this.fetch())}
+          onClick={() => (this.state.isFetching ? null : this.fetchSongsList())}
         >
           {this.state.isFetching ? 'Loading...' : 'Show songs'}
         </div>
@@ -85,25 +105,32 @@ export class SongsListContainer extends React.PureComponent {
           fontSize: '16px',
           lineHeight: '1.2',
         }}
+        onClick={() => this.fetchLyrics(i)}
       >
         <div style={{ color: ACCENT, marginBottom: '5px' }}>{i.name}</div>
         <div style={{ color: '#777' }}>{i.artist}</div>
       </li>
     ));
 
+    const lyrics = this.state.showingLyrics ?
+      <Lyrics {...this.state.showingLyrics} /> : null;
+
     return (
-      <ul
-        style={{
-          margin: '24px 0',
-          padding: '0 10px',
-          listStyle: 'none',
-          flex: '1 1 auto',
-          overflow: 'auto',
-        }}
-        onScroll={e => e.stopPropagation()}
-      >
-        {tracks}
-      </ul>
+      <div>
+        {lyrics}
+        <ul
+          style={{
+            margin: '24px 0',
+            padding: '0 10px',
+            listStyle: 'none',
+            flex: '1 1 auto',
+            overflow: 'auto',
+          }}
+          onScroll={e => e.stopPropagation()}
+        >
+          {tracks}
+        </ul>
+      </div>
     );
   }
 }
@@ -111,6 +138,7 @@ export class SongsListContainer extends React.PureComponent {
 SongsListContainer.propTypes = {
   word: PropTypes.string.isRequired,
   fetchSongsUrl: PropTypes.string.isRequired,
+  fetchLyricsUrl: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Radium(SongsListContainer));

@@ -1,3 +1,4 @@
 {
-  "fetchSongsUrl": "my-backend-url"
+  "fetchSongsUrl": "my-backend-url",
+  "fetchLyricsUrl": "my-backend-url"
 }

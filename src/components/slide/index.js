@@ -15,6 +15,7 @@ export const SlideContainer = (props) => {
   return (
     <div
       style={{
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',

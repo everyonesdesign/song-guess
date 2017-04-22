@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import shuffle from 'lodash/shuffle';
 
 import wordsReducer from './reducers/words';
 import configReducer from './reducers/config';
@@ -35,9 +36,9 @@ fetch('config.json')
 // fetch dictionary
 fetch('dict/index.json')
   .then(response => response.json())
-  .then(data => (
+  .then(words => (
     store.dispatch({
-      data,
+      data: shuffle(words),
       type: DICTIONARY_LOADED,
     })
   ),

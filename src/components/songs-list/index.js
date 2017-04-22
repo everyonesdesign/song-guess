@@ -11,17 +11,21 @@ export class SongsListContainer extends React.PureComponent {
     super(...args);
 
     this.state = {
+      isFetching: false,
       items: null,
     };
   }
 
   fetch() {
+    this.setState({ isFetching: true });
+
     const url = `${this.props.fetchSongsUrl}?word=${this.props.word}`;
     fetch(url)
       .then(response => response.json())
       .then((data) => {
         console.log(data);
         this.setState({
+          isFetching: false,
           items: data.message.body.track_list.map(t => ({
             id: t.track.track_id,
             artist: t.track.artist_name,
@@ -41,11 +45,11 @@ export class SongsListContainer extends React.PureComponent {
             margin: '24px 0',
             fontSize: '24px',
             textAlign: 'center',
-            color: '#777',
+            color: this.state.isFetching ? '#777' : ACCENT,
           }}
-          onClick={() => this.fetch()}
+          onClick={() => (this.state.isFetching ? null : this.fetch())}
         >
-          Show songs
+          {this.state.isFetching ? 'Loading...' : 'Show songs'}
         </div>
       );
     }

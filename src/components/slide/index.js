@@ -6,6 +6,7 @@ import Swipeable from 'react-swipeable';
 
 import { mapStateToProps, mapDispatchToProps } from './connector';
 import Arrow from '../arrow';
+import Lyrics from '../lyrics';
 import SongsList from '../songs-list';
 import { getWord } from '../../utils';
 import { DEFAULT_FONT } from '../../styles';
@@ -82,6 +83,13 @@ export class SlideContainer extends React.PureComponent {
   render() {
     const word = this.getWord();
 
+    const lyrics = this.state.showingLyrics ? (
+      <Lyrics
+        {...this.state.showingLyrics}
+        onClose={() => this.setState({ showingLyrics: null })}
+      />
+    ) : null;
+
     const slideContents = (
       <div
         style={{
@@ -124,6 +132,7 @@ export class SlideContainer extends React.PureComponent {
           fetchSongsList={() => this.fetchSongsList()}
           fetchLyrics={item => this.fetchLyrics(item)}
         />
+        {lyrics}
       </div>
     );
 

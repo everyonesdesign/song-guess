@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import sample from 'lodash/sample';
 
 import { DEFAULT_FONT, ACCENT } from '../../styles';
-import Lyrics from '../lyrics';
 import Arrow from '../arrow';
 
 const NOT_FOUND_PHRASES = [
@@ -85,13 +84,6 @@ export class SongsListContainer extends React.PureComponent {
       </li>
     ));
 
-    const lyrics = this.props.showingLyrics ? (
-      <Lyrics
-        {...this.props.showingLyrics}
-        onClose={() => this.setState({ showingLyrics: null })}
-      />
-    ) : null;
-
     return (
       <div
         style={{
@@ -99,7 +91,6 @@ export class SongsListContainer extends React.PureComponent {
           overflow: 'auto',
         }}
       >
-        {lyrics}
         <ul
           style={{
             margin: '24px 0',
@@ -124,15 +115,6 @@ SongsListContainer.defaultProps = {
 SongsListContainer.propTypes = {
   isFetchingSongsList: PropTypes.bool.isRequired,
   songs: PropTypes.array,
-  showingLyrics: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    artist: PropTypes.string.isRequired,
-    album: PropTypes.string.isRequired,
-    word: PropTypes.string.isRequired,
-    lyrics: PropTypes.string.isRequired,
-    copyright: PropTypes.string.isRequired,
-  }),
   lyricsBeingFetched: PropTypes.number,
   fetchSongsList: PropTypes.func.isRequired,
   fetchLyrics: PropTypes.func.isRequired,

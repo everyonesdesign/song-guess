@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { DEFAULT_FONT } from '../../styles';
 
 function getHighlightedLyrics(lyrics, word) {
-  const regex = new RegExp(`\\b${word}\\b`);
+  const regex = new RegExp(`\\b${word}\\b`, 'g');
   return lyrics.replace(regex, '<strong>$&</strong>');
 }
 

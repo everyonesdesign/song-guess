@@ -18,7 +18,7 @@ export class SlideContainer extends React.PureComponent {
       songs: null,
       showingLyrics: null,
       isFetchingSongsList: false,
-      isFetchingLyrics: false,
+      lyricsBeingFetched: null,
     };
   }
 
@@ -50,11 +50,11 @@ export class SlideContainer extends React.PureComponent {
   }
 
   fetchLyrics(song) {
-    if (this.state.isFetchingLyrics) {
+    if (this.state.lyricsBeingFetched) {
       return;
     }
 
-    this.setState({ isFetchingLyrics: song.id });
+    this.setState({ lyricsBeingFetched: song.id });
 
     const url = `${this.props.fetchLyricsUrl}?id=${song.id}`;
     fetch(url)
@@ -68,7 +68,7 @@ export class SlideContainer extends React.PureComponent {
         document.body.appendChild(script);
 
         this.setState({
-          isFetchingLyrics: false,
+          lyricsBeingFetched: false,
           showingLyrics: {
             ...song,
             word: this.getWord(),
@@ -120,7 +120,7 @@ export class SlideContainer extends React.PureComponent {
           isFetchingSongsList={this.state.isFetchingSongsList}
           songs={this.state.songs}
           showingLyrics={this.state.showingLyrics}
-          isFetchingLyrics={this.state.isFetchingLyrics}
+          lyricsBeingFetched={this.state.lyricsBeingFetched}
           fetchSongsList={() => this.fetchSongsList()}
           fetchLyrics={item => this.fetchLyrics(item)}
         />

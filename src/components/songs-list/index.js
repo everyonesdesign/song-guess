@@ -79,7 +79,7 @@ export class SongsListContainer extends React.PureComponent {
       >
         <div style={{ color: ACCENT, marginBottom: '5px' }}>
           {i.name}
-          {this.props.isFetchingLyrics === i.id ? preloader : null}
+          {this.props.lyricsBeingFetched === i.id ? preloader : null}
         </div>
         <div style={{ color: '#777' }}>{i.artist}</div>
       </li>
@@ -116,6 +116,7 @@ export class SongsListContainer extends React.PureComponent {
 }
 
 SongsListContainer.defaultProps = {
+  lyricsBeingFetched: null,
   showingLyrics: null,
   songs: null,
 };
@@ -124,7 +125,7 @@ SongsListContainer.propTypes = {
   isFetchingSongsList: PropTypes.bool.isRequired,
   songs: PropTypes.array,
   showingLyrics: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     artist: PropTypes.string.isRequired,
     album: PropTypes.string.isRequired,
@@ -132,7 +133,7 @@ SongsListContainer.propTypes = {
     lyrics: PropTypes.string.isRequired,
     copyright: PropTypes.string.isRequired,
   }),
-  isFetchingLyrics: PropTypes.bool.isRequired,
+  lyricsBeingFetched: PropTypes.number,
   fetchSongsList: PropTypes.func.isRequired,
   fetchLyrics: PropTypes.func.isRequired,
 };

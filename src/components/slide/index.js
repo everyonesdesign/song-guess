@@ -20,6 +20,7 @@ export const SlideContainer = (props) => {
         flexDirection: 'column',
         height: '100%',
         padding: '10px',
+        overflow: 'hidden',
       }}
     >
       <div

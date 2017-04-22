@@ -59,6 +59,11 @@ export class SongsListContainer extends React.PureComponent {
       .then((data) => {
         const lyrics = data.message.body.lyrics;
 
+        // tracking required by https://developer.musixmatch.com/documentation/api-reference/track-lyrics-get
+        const script = document.createElement('script');
+        script.src = lyrics.script_tracking_url;
+        document.body.appendChild(script);
+
         this.setState({
           isFetchingLyrics: null,
           showingLyrics: {

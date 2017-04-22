@@ -34,7 +34,7 @@ export class SongsListContainer extends React.PureComponent {
         label = (
           <div style={{ textAlign: 'center' }} >
             songs
-            <Arrow direction="bottom" style={{ display: 'block', margin: 'auto' }} />
+            <Arrow direction="bottom" style={{ display: 'block', margin: '6px auto' }} />
           </div>
         );
       }

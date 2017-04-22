@@ -7,6 +7,7 @@ import { mapStateToProps, mapDispatchToProps } from './connector';
 import Arrow from '../arrow';
 import SongsList from '../songs-list';
 import { getWord } from '../../utils';
+import { DEFAULT_FONT } from '../../styles';
 
 export const SlideContainer = (props) => {
   const word = getWord(props.words, props.index);
@@ -15,10 +16,9 @@ export const SlideContainer = (props) => {
     <div style={{ height: '100%' }}>
       <div
         style={{
+          ...DEFAULT_FONT,
           margin: '12px 0',
           padding: '12px 24px',
-          fontFamily: 'Catamaran, sans-serif',
-          fontWeight: 300,
           fontSize: '36px',
           lineHeight: '40px',
           textAlign: 'center',

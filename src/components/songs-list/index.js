@@ -2,9 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Radium from 'radium';
 import PropTypes from 'prop-types';
+import sample from 'lodash/sample';
 
 import { mapStateToProps, mapDispatchToProps } from './connector';
 import { DEFAULT_FONT, ACCENT } from '../../styles';
+
+const NOT_FOUND_PHRASES = [
+  'No songs for the word :(',
+  'No songs found. If you could think of any — you won',
+  'I could find nothing. Can you?',
+  'Hm... Some "Madonna" song? No, there\'re no songs for the word',
+];
 
 export class SongsListContainer extends React.PureComponent {
   constructor(...args) {
@@ -13,6 +21,10 @@ export class SongsListContainer extends React.PureComponent {
     this.state = {
       isFetching: false,
       items: null,
+
+      // this allows us to render the same phrase and not pick
+      // a different one on every rerendering
+      notFoundPhrase: sample(NOT_FOUND_PHRASES),
     };
   }
 
@@ -50,6 +62,17 @@ export class SongsListContainer extends React.PureComponent {
         >
           {this.state.isFetching ? 'Loading...' : 'Show songs'}
         </div>
+      );
+    } else if (!this.state.items.length) {
+      return (
+        <div
+          style={{
+            ...DEFAULT_FONT,
+            fontSize: '24px',
+            color: '#777',
+            textAlign: 'center',
+          }}
+        >{this.state.notFoundPhrase}</div>
       );
     }
 

@@ -14,6 +14,8 @@ export const LyricsContainer = props => (
     style={{
       ...DEFAULT_FONT,
       position: 'absolute',
+      display: 'flex',
+      flexDirection: 'column',
       top: 0,
       right: 0,
       bottom: 0,
@@ -24,13 +26,33 @@ export const LyricsContainer = props => (
       overflow: 'auto',
     }}
   >
+    <div
+      style={{
+        height: '50px',
+        lineHeight: '50px',
+        fonrSize: '24px',
+        color: '#777',
+      }}
+      onClick={props.onClose}
+    >
+      back to word
+    </div>
     <div style={{ fontSize: '24px', margin: '4px 0 24px' }}>
       {props.name}
     </div>
     <div style={{ fontSize: '14px', margin: '-18px 0 22px', color: '#777' }}>
       {props.artist}
     </div>
-    <div style={{ whiteSpace: 'pre-wrap', margin: '22px 0', lineHeight: 1.5, textAlign: 'left' }}>
+    <div
+      style={{
+        flex: '1 1 auto',
+        whiteSpace: 'pre-wrap',
+        margin: '22px 0',
+        lineHeight: 1.5,
+        textAlign: 'left',
+        overflow: 'auto',
+      }}
+    >
       <div dangerouslySetInnerHTML={{ __html: getHighlightedLyrics(props.lyrics, props.word) }} />
     </div>
   </div>
@@ -41,6 +63,7 @@ LyricsContainer.propTypes = {
   name: PropTypes.string.isRequired,
   artist: PropTypes.string.isRequired,
   lyrics: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default LyricsContainer;

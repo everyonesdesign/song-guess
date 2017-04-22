@@ -112,8 +112,12 @@ export class SongsListContainer extends React.PureComponent {
       </li>
     ));
 
-    const lyrics = this.state.showingLyrics ?
-      <Lyrics {...this.state.showingLyrics} /> : null;
+    const lyrics = this.state.showingLyrics ? (
+      <Lyrics
+        {...this.state.showingLyrics}
+        onClose={() => this.setState({ showingLyrics: null })}
+      />
+    ) : null;
 
     return (
       <div>

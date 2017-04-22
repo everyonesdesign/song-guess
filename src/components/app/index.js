@@ -5,7 +5,7 @@ import { virtualize } from 'react-swipeable-views-utils';
 import PropTypes from 'prop-types';
 
 import Slide from '../slide';
-import { LIGHT_ACCENT } from '../../styles';
+import { DEFAULT_FONT, LIGHT_ACCENT } from '../../styles';
 import { mapStateToProps, mapDispatchToProps } from './connector';
 
 const VirtualizeSwipeableViews = virtualize(SwipeableViews);
@@ -19,7 +19,17 @@ export const AppContainer = (props) => {
   if (props.words && props.config) {
     contents = <VirtualizeSwipeableViews slideRenderer={slideRenderer} />;
   } else {
-    contents = <span>Loading...</span>;
+    contents = (
+      <div
+        style={{
+          ...DEFAULT_FONT,
+          margin: '14px 0',
+          color: '#777',
+          fontSize: '24px',
+          textAlign: 'center',
+        }}
+      >Starting the app...</div>
+    );
   }
 
   return (

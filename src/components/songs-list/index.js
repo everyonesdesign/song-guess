@@ -23,7 +23,6 @@ export class SongsListContainer extends React.PureComponent {
     fetch(url)
       .then(response => response.json())
       .then((data) => {
-        console.log(data);
         this.setState({
           isFetching: false,
           items: data.message.body.track_list.map(t => ({

@@ -1,6 +1,6 @@
 A simple game. The goal is to remember some songs which contain a certain word.
 
-Musixmatch API is used as a backend. You'll need to write a simple proxy to their API, e.g. in PHP:
+Musixmatch API is used as a backend. You'll need to write a simple proxy for song search, e.g. in PHP:
 
 ```
 <?php
@@ -13,6 +13,18 @@ Musixmatch API is used as a backend. You'll need to write a simple proxy to thei
     $tracks = $obj->message->body->track_list;
     header('Access-Control-Allow-Origin: *');
     echo json_encode($tracks);
+?>
+```
+And also one for lyrics fetching:
+
+```
+<?php
+    $url = 'https://api.musixmatch.com/ws/1.1/track.lyrics.get';
+    $track = '?track_id=' . $_GET['id'];
+    $api_key = '&apikey=YOUR-KEY-GOES-HERE';
+    $json = file_get_contents($url . $track . $api_key);
+    header('Access-Control-Allow-Origin: *');
+    echo $json;
 ?>
 ```
 

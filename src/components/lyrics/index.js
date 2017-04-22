@@ -26,22 +26,21 @@ export const LyricsContainer = props => (
       overflow: 'auto',
     }}
   >
-    <div
-      style={{
-        height: '50px',
-        lineHeight: '50px',
-        fonrSize: '24px',
-        color: '#777',
-      }}
-      onClick={props.onClose}
-    >
-      back to word
-    </div>
-    <div style={{ fontSize: '24px', margin: '4px 0 24px' }}>
-      {props.name}
-    </div>
-    <div style={{ fontSize: '14px', margin: '-18px 0 22px', color: '#777' }}>
-      {props.artist}
+    <div onClick={props.onClose}>
+      <div
+        style={{
+          height: '60px',
+          lineHeight: '60px',
+          fontSize: '24px',
+          color: '#777',
+        }}
+      >go back</div>
+      <div style={{ fontSize: '24px', margin: '4px 0 24px' }}>
+        {props.name}
+      </div>
+      <div style={{ fontSize: '14px', margin: '-18px 0 22px', color: '#777' }}>
+        {props.artist}
+      </div>
     </div>
     <div
       style={{

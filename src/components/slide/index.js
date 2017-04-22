@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Radium from 'radium';
 import PropTypes from 'prop-types';
+import Swipeable from 'react-swipeable';
 
 import { mapStateToProps, mapDispatchToProps } from './connector';
 import Arrow from '../arrow';
@@ -81,7 +82,7 @@ export class SlideContainer extends React.PureComponent {
   render() {
     const word = this.getWord();
 
-    return (
+    const slideContents = (
       <div
         style={{
           position: 'relative',
@@ -125,6 +126,16 @@ export class SlideContainer extends React.PureComponent {
         />
       </div>
     );
+
+    if (!this.state.items) {
+      return (
+        <Swipeable onSwipedUp={() => this.fetchSongsList()}>
+          {slideContents}
+        </Swipeable>
+      );
+    }
+
+    return slideContents;
   }
 }
 

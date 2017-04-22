@@ -160,7 +160,7 @@ export class SlideContainer extends React.PureComponent {
 
     if (!this.state.songs) {
       return (
-        <Swipeable onSwipedUp={() => this.fetchSongsList()}>
+        <Swipeable onSwipedUp={() => this.fetchSongsList()} delta={150}>
           {slideContents}
         </Swipeable>
       );

@@ -15,7 +15,14 @@ export const LyricsContainer = (props) => {
   if (props.lyrics) {
     // eslint-disable-next-line no-underscore-dangle
     const __html = getHighlightedLyrics(props.lyrics, props.word);
-    lyrics = <div dangerouslySetInnerHTML={{ __html }} />;
+    lyrics = (
+      <div>
+        <div style={{ fontSize: '14px', color: '#aaa', textAlign: 'center', marginBottom: '10px' }}>
+          {props.copyright}
+        </div>
+        <div dangerouslySetInnerHTML={{ __html }} />
+      </div>
+    );
   } else {
     lyrics = 'Unfortunately, no lyrics found for the song';
   }
@@ -49,18 +56,15 @@ export const LyricsContainer = (props) => {
         <div style={{ fontSize: '24px', margin: '4px 0 6px' }}>
           {props.name}
         </div>
-        <div style={{ fontSize: '14px', margin: '6px 0 16px', color: '#777' }}>
+        <div style={{ fontSize: '14px', margin: '6px 0', color: '#777' }}>
           {props.artist}
-        </div>
-        <div style={{ fontSize: '14px', color: '#aaa' }}>
-          {props.copyright}
         </div>
       </div>
       <div
         style={{
           flex: '1 1 auto',
           whiteSpace: 'pre-wrap',
-          margin: '22px 0',
+          margin: '10px 0',
           lineHeight: 1.5,
           textAlign: 'left',
           overflow: 'auto',

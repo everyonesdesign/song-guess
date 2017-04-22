@@ -32,8 +32,16 @@ export const SlideContainer = (props) => {
           textAlign: 'center',
         }}
       >
-        <Arrow direction="left" style={{ float: 'left' }} />
-        <Arrow direction="right" style={{ float: 'right' }} />
+        <Arrow
+          direction="left"
+          style={{ float: 'left' }}
+          onClick={props.goToPrevSlide}
+        />
+        <Arrow
+          direction="right"
+          style={{ float: 'right' }}
+          onClick={props.goToNextSlide}
+        />
         {word}
       </div>
       <SongsList word={word} />
@@ -48,6 +56,8 @@ SlideContainer.defaultProps = {
 SlideContainer.propTypes = {
   words: PropTypes.array,
   index: PropTypes.number.isRequired,
+  goToPrevSlide: PropTypes.func.isRequired,
+  goToNextSlide: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Radium(SlideContainer));

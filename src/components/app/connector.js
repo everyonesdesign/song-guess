@@ -1,6 +1,5 @@
 export const mapStateToProps = state => ({
-  words: state.words,
-  config: state.config,
+  isReady: !!(state.words && state.config),
 });
 
 export const mapDispatchToProps = () => ({});

@@ -15,3 +15,6 @@ Musixmatch API is used as a backend. You'll need to write a simple proxy to thei
     echo json_encode($tracks);
 ?>
 ```
+
+You should also create a directory `dict` and place here `index.json` file with your dictionary.
+Its format is a simple list of words, e.g. `["cat", "bat", "rat"]`.

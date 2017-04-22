@@ -97,7 +97,10 @@ export class SongsListContainer extends React.PureComponent {
           margin: '24px 0',
           padding: '0 10px',
           listStyle: 'none',
+          flex: '1 1 auto',
+          overflow: 'auto',
         }}
+        onScroll={e => e.stopPropagation()}
       >
         {tracks}
       </ul>

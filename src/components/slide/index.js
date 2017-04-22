@@ -13,7 +13,14 @@ export const SlideContainer = (props) => {
   const word = getWord(props.words, props.index);
 
   return (
-    <div style={{ height: '100%', padding: '10px' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        padding: '10px',
+      }}
+    >
       <div
         style={{
           ...DEFAULT_FONT,

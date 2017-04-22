@@ -46,11 +46,14 @@ export const LyricsContainer = (props) => {
             color: '#777',
           }}
         >go back</div>
-        <div style={{ fontSize: '24px', margin: '4px 0 24px' }}>
+        <div style={{ fontSize: '24px', margin: '4px 0 6px' }}>
           {props.name}
         </div>
-        <div style={{ fontSize: '14px', margin: '-18px 0 22px', color: '#777' }}>
+        <div style={{ fontSize: '14px', margin: '6px 0 16px', color: '#777' }}>
           {props.artist}
+        </div>
+        <div style={{ fontSize: '14px', color: '#aaa' }}>
+          {props.copyright}
         </div>
       </div>
       <div
@@ -75,6 +78,7 @@ LyricsContainer.propTypes = {
   word: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   artist: PropTypes.string.isRequired,
+  copyright: PropTypes.string.isRequired,
   lyrics: PropTypes.string,
   onClose: PropTypes.func.isRequired,
 };
